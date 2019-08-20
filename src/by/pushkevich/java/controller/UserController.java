@@ -2,16 +2,17 @@ package controller;
 
 import dao.SerializableUserDao;
 import dao.UserDao;
+import dao.XmlUserDao;
 import entity.User;
 
 import java.util.List;
 
 public class UserController {
-    private UserDao dao = new SerializableUserDao();
+    private UserDao dao = new XmlUserDao();
 
     public boolean addUser(User user) {
         if (dao.isExist(user)) return false;
-        else dao.addUser(user);
+        dao.addUser(user);
         return true;
     }
 

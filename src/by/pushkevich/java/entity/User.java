@@ -1,12 +1,16 @@
 package entity;
 
-import role.FamilyStatus;
-import role.WorkStatus;
+import role.Role;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlType(propOrder = {"id", "firstName", "lastName", "email", "roles", "phoneNumbers"})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -15,17 +19,15 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private WorkStatus workStatus;
-    private FamilyStatus familyStatus;
-    private Set<Long> phoneNumbers;
+    private Set<Role> roles;
+    private Set<String> phoneNumbers;
 
-    public User(int id, String firstName, String lastName, String email, WorkStatus workStatus, FamilyStatus familyStatus, Set<Long> phoneNumbers) {
+    public User(int id, String firstName, String lastName, String email, Set<Role> role, Set<String> phoneNumbers) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.workStatus = workStatus;
-        this.familyStatus = familyStatus;
+        this.roles = role;
         this.phoneNumbers = phoneNumbers;
     }
 
@@ -40,6 +42,7 @@ public class User implements Serializable {
         return serialVersionUID;
     }
 
+    @XmlElement(name = "Имя")
     public String getFirstName() {
         return firstName;
     }
@@ -47,6 +50,8 @@ public class User implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
+    @XmlElement(name = "Фамилия")
 
     public String getLastName() {
         return lastName;
@@ -56,6 +61,7 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    @XmlElement(name = "Почта")
     public String getEmail() {
         return email;
     }
@@ -64,30 +70,27 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public WorkStatus getWorkStatus() {
-        return workStatus;
+    @XmlElementWrapper(name = "Роли")
+    @XmlElement(name = "Роль")
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setWorkStatus(WorkStatus workStatus) {
-        this.workStatus = workStatus;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public FamilyStatus getFamilyStatus() {
-        return familyStatus;
-    }
-
-    public void setFamilyStatus(FamilyStatus familyStatus) {
-        this.familyStatus = familyStatus;
-    }
-
-    public Set<Long> getPhoneNumbers() {
+    @XmlElementWrapper(name = "Номера")
+    @XmlElement(name = "Номер")
+    public Set<String> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(Set<Long> phoneNumbers) {
+    public void setPhoneNumbers(Set<String> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 
+    @XmlAttribute
     public int getId() {
         return id;
     }
@@ -95,8 +98,13 @@ public class User implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public void addPhoneNumber(Long number){
+
+    public void addPhoneNumber(String number) {
         phoneNumbers.add(number);
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 
     @Override
@@ -118,8 +126,7 @@ public class User implements Serializable {
                 " имя " + firstName +
                 " фамилия " + lastName +
                 " email " + email +
-                " занятость " + workStatus +
-                " семейное положение " + familyStatus +
+                " роли: " + roles +
                 " номера: " + phoneNumbers;
     }
 }

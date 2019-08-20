@@ -22,9 +22,8 @@ public class EditUserAction extends BasicAction implements Action {
             tmpUser.setFirstName(getString("Введите имя:"));
             tmpUser.setLastName(getString("Введите фамилию:"));
             tmpUser.setEmail(action.getEmail());
-            tmpUser.setFamilyStatus(action.familyStatusChoice());
-            tmpUser.setWorkStatus(action.workStatusChoice());
-            tmpUser.setPhoneNumbers(action.getPhoneNumbers());
+            tmpUser.setRoles(action.roleChoice());
+            tmpUser.setPhoneNumbers(action.phoneNumberChoice());
             controller.editUser(tmpUser);
         }
         else System.out.println("Пользователь не найден");

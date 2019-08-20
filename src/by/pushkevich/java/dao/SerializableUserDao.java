@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SerializableUserDao implements UserDao {
 
-    private static final String PATH = "users.bin";
+    private static final String PATH = "resources/users.bin";
 
     private List<User> users = getUsers();
 
@@ -31,15 +31,16 @@ public class SerializableUserDao implements UserDao {
 
     @Override
     public void removeUser(User user) {
-            users.remove(user);
-            saveUsers(users);
+        users.remove(user);
+        saveUsers(users);
     }
-    public void editUser(User user){
-       if (users.contains(user)){
-           int i = users.indexOf(user);
-           users.set(i, user);
-           saveUsers(users);
-       }
+
+    public void editUser(User user) {
+        if (users.contains(user)) {
+            int i = users.indexOf(user);
+            users.set(i, user);
+            saveUsers(users);
+        }
     }
 
     private void saveUsers(List<User> users) {

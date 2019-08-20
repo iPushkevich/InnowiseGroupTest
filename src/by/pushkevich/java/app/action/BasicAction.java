@@ -15,9 +15,4 @@ public abstract class BasicAction {
         System.out.println(message);
         return ConsoleInput.getString();
     }
-
-    protected long getLong(String message){
-        System.out.println(message);
-        return ConsoleInput.getLong();
-    }
 }
